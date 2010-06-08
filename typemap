@@ -1,0 +1,4 @@
+TYPEMAP
+CorosyncCPGHandle      T_PTROBJ
+cpg_guarantee_t        T_IV
+cs_dispatch_flags_t    T_IV
