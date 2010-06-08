@@ -1,0 +1,7 @@
+/Corosync/
+stored-version.pm
+stored-version.sh
+MANIFEST
+META.yml
+pkg/
+*~
