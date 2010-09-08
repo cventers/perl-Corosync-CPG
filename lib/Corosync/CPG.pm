@@ -129,6 +129,15 @@ sub set_cb_error {
 	$self->{_cb}{error} = $cb;
 }
 
+# Obtains the current flow control state
+sub flow_control_state_get {
+	my $self = shift;
+
+	my $fcs = $self->_flow_control_state_get;
+	defined($fcs);
+	return $fcs;
+}
+
 # Throws an exception with Corosync error code
 sub _cpgdie {
     my $self = shift;
