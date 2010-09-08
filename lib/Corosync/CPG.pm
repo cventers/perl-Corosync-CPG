@@ -218,7 +218,7 @@ Corosync::CPG - Perl bindings for Corosync virtual synchrony / libcpg
 
 =head1 DESCRIPTION
 
-Corosync::CPG is a module to enable Perl access ot the Corosync CPG service,
+Corosync::CPG is a module to enable Perl access to the Corosync CPG service,
 courtesy of the system's Corosync executive. CPG enables distributed
 applications that operate properly during cluster partitions, merges and
 faults. CPG provides reliable, predictably ordered multicast messaging, and

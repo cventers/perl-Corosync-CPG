@@ -25,7 +25,7 @@ SYNOPSIS
       $cpg->dispatch(CS_DISPATCH_BLOCK);
 
 DESCRIPTION
-    Corosync::CPG is a module to enable Perl access ot the Corosync CPG
+    Corosync::CPG is a module to enable Perl access to the Corosync CPG
     service, courtesy of the system's Corosync executive. CPG enables
     distributed applications that operate properly during cluster
     partitions, merges and faults. CPG provides reliable, predictably
