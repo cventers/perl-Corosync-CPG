@@ -1,0 +1,55 @@
+NAME
+    Corosync::CPG - Perl bindings for Corosync virtual synchrony / libcpg
+
+SYNOPSIS
+      use Corosync::CPG qw/:constants/;
+
+      # Connect to Corosync executive
+      my $cpg = Corosync::CPG->new(
+          callbacks => {
+              deliver => \&deliver_callback,
+              confchg => \&confchg_callback,
+          },
+      );
+
+      # Join a CPG multicast group
+      $cpg->join('TEST_GROUP');
+
+      # Send a CPG message
+      $cpg->mcast_joined(CPG_TYPE_AGREED, "the current time is " . time);
+
+      # Non-blocking check for pending messages
+      $cpg->dispatch(CS_DISPATCH_ALL);
+
+      # Process pending messages forever
+      $cpg->dispatch(CS_DISPATCH_BLOCK);
+
+DESCRIPTION
+    Corosync::CPG is a module to enable Perl access ot the Corosync CPG
+    service, courtesy of the system's Corosync executive. CPG enables
+    distributed applications that operate properly during cluster
+    partitions, merges and faults. CPG provides reliable, predictably
+    ordered multicast messaging, and you get notified any time the cluster
+    group gains or loses nodes.
+
+DEPENDENCIES
+    libcpg.so - Corosync CPG client library
+        This is the library that talks to the Corosync executive.
+
+    Running Corosync executive / CPG service
+        All CPG logic is actually implemented as the CPG service running on
+        the Corosync executive. Without it, no CPG service is possible.
+
+    Access to Corosync executive
+        Accesing the Corosync executive may require your program to be
+        running as the same username as the executive. Check the Corosync
+        documentation for more details.
+
+AUTHOR
+    Chase Venters <chase.venters@gmail.com>
+
+COPYRIGHT
+    Copyright (c) 2010 Chase Venters. All rights reserved. This program is
+    free software; you can redistribute it and/or modify it under the same
+    terms as Perl itself.
+
