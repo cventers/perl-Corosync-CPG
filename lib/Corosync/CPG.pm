@@ -19,6 +19,10 @@ use constant CPG_TYPE_FIFO              => 1;
 use constant CPG_TYPE_AGREED            => 2;
 use constant CPG_TYPE_SAFE              => 3;
 
+# corosync/cpg.h / cpg_flow_control_state_t
+use constant CPG_FLOW_CONTROL_DISABLED	=> 0;
+use constant CPG_FLOW_CONTROL_ENABLED	=> 1;
+
 # Export constants
 my @constants = qw/
 	CS_DISPATCH_ONE
@@ -29,6 +33,9 @@ my @constants = qw/
 	CPG_TYPE_FIFO
 	CPG_TYPE_AGREED
 	CPG_TYPE_SAFE
+
+	CPG_FLOW_CONTROL_DISABLED
+	CPG_FLOW_CONTROL_ENABLED
 /;
 
 our @ISA = qw/Exporter DynaLoader/;
