@@ -141,7 +141,7 @@ sub flow_control_state_get {
 	my $self = shift;
 
 	my $fcs = $self->_flow_control_state_get;
-	defined($fcs);
+	defined($fcs) || $self->_cpgdie;
 	return $fcs;
 }
 
