@@ -99,40 +99,40 @@ bootstrap Corosync::CPG;
 
 # Constructs a new instance
 sub new {
-    my $class = shift;
-    my %args = @_;
+	my $class = shift;
+	my %args = @_;
 
-    my $self = {};
+	my $self = {};
 
-    # Capture callbacks from constructor arguments
-    $self->{_cb}{deliver} = delete $args{callbacks}{deliver};
-    $self->{_cb}{confchg} = delete $args{callbacks}{confchg};
-    $self->{_cb}{error} = delete $args{callbacks}{error};
+	# Capture callbacks from constructor arguments
+	$self->{_cb}{deliver} = delete $args{callbacks}{deliver};
+	$self->{_cb}{confchg} = delete $args{callbacks}{confchg};
+	$self->{_cb}{error} = delete $args{callbacks}{error};
 
-    # Build the class
-    bless($self, $class);
+	# Build the class
+	bless($self, $class);
 
-    # Connect to CPG service @ Corosync executive
-    my $cpgh = $self->{_cpg_handle} = $self->_initialize;
-    defined($cpgh) || $self->_cpgdie;
+	# Connect to CPG service @ Corosync executive
+	my $cpgh = $self->{_cpg_handle} = $self->_initialize;
+	defined($cpgh) || $self->_cpgdie;
 
-    $self;
+	$self;
 }
 
 # Obtains the current FD as an IO::Handle
 sub iohandle_get {
-    my $self = shift;
-    my $ioh = IO::Handle->new;
-    $ioh->fdopen($self->fd_get, 'r') || die $!;
-    $ioh;
+	my $self = shift;
+	my $ioh = IO::Handle->new;
+	$ioh->fdopen($self->fd_get, 'r') || die $!;
+	$ioh;
 }
 
 # Obtains the current FD
 sub fd_get {
-    my $self = shift;
-    my $fd = $self->_fd_get();
-    defined($fd) || $self->_cpgdie;
-    $fd;
+	my $self = shift;
+	my $fd = $self->_fd_get();
+	defined($fd) || $self->_cpgdie;
+	$fd;
 }
 
 # Gets the local node ID
@@ -143,33 +143,33 @@ sub local_get {
 
 # Joins a cluster group
 sub join {
-    my $self = shift;
-    my $name = shift;
+	my $self = shift;
+	my $name = shift;
 
-    $self->_join($name) || $self->_cpgdie;
+	$self->_join($name) || $self->_cpgdie;
 }
 
 # Leaves a cluster group
 sub leave {
-    my $self = shift;
-    my $name = shift;
+	my $self = shift;
+	my $name = shift;
 
-    $self->_leave($name) || $self->_cpgdie;
+	$self->_leave($name) || $self->_cpgdie;
 }
 
 # Processes data, fires off callbacks
 sub dispatch {
-    my $self = shift;
-    my $type = shift;
-    $self->_dispatch($type) || $self->_cpgdie;
+	my $self = shift;
+	my $type = shift;
+	$self->_dispatch($type) || $self->_cpgdie;
 }
 
 # Multicasts a message to all the joined cluster group members
 sub mcast_joined {
-    my $self = shift;
-    my $guarantee = shift;
+	my $self = shift;
+	my $guarantee = shift;
 
-    $self->_mcast_joined($guarantee, @_) || $self->_cpgdie;
+	$self->_mcast_joined($guarantee, @_) || $self->_cpgdie;
 }
 
 # Set the deliver callback
@@ -207,8 +207,8 @@ sub flow_control_state_get {
 
 # Throws an exception with Corosync error code
 sub _cpgdie {
-    my $self = shift;
-    my $err = $self->{_cs_error};
+	my $self = shift;
+	my $err = $self->{_cs_error};
 
 	if (defined($err)) {
 		my $str = $errmap{$err};
@@ -220,7 +220,7 @@ sub _cpgdie {
 		$err = 'UNKNOWN';
 	}
 
-    die "CPG error: $err";
+	die "CPG error: $err";
 }
 
 # Obtains the membership array for the current group state
@@ -234,30 +234,30 @@ sub membership_get {
 
 # Callback
 sub _cb_deliver {
-    my $self = shift;
+	my $self = shift;
 
-    if (my $cb = $self->{_cb}{deliver}) {
-        &$cb(@_);
-    }
+	if (my $cb = $self->{_cb}{deliver}) {
+		&$cb(@_);
+	}
 }
 
 # Callback
 sub _cb_confchg {
-    my $self = shift;
+	my $self = shift;
 
-    if (my $cb = $self->{_cb}{confchg}) {
-        &$cb(@_);
-    }
+	if (my $cb = $self->{_cb}{confchg}) {
+		&$cb(@_);
+	}
 }
 
 # THIS IS WAY YUCKY as it breaks encapsulation. It shall remain undocumented
 # in the hopes it can be put out of its misery before it infects anyone.
 sub _cb_error {
-    my $self = shift;
+	my $self = shift;
 
-    if (my $cb = $self->{_cb}{error}) {
-        &$cb(@_);
-    }
+	if (my $cb = $self->{_cb}{error}) {
+		&$cb(@_);
+	}
 }
 
 1;
@@ -298,7 +298,7 @@ Corosync::CPG is a module to enable Perl access to the Corosync CPG service,
 courtesy of the system's Corosync executive. CPG enables distributed
 applications that operate properly during cluster partitions, merges and
 faults. CPG provides reliable, predictably ordered multicast messaging, and
-you get notified any time the cluster group gains or loses nodes. 
+you get notified any time the cluster group gains or loses nodes.
 
 =head1 DEPENDENCIES
 
@@ -311,7 +311,7 @@ This is the library that talks to the Corosync executive.
 =item Running Corosync executive / CPG service
 
 All CPG logic is actually implemented as the CPG service running on the
-Corosync executive. Without it, no CPG service is possible. 
+Corosync executive. Without it, no CPG service is possible.
 
 =item Access to Corosync executive
 
