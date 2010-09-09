@@ -392,3 +392,7 @@ Copyright (c) 2010 Chase Venters. All rights reserved. This program is free
 software; you can redistribute it and/or modify it under the same terms as Perl
 itself.
 
+=head1 URL
+
+http://github.com/cventers/perl-Corosync-CPG
+
