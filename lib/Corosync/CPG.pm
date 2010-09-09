@@ -62,7 +62,8 @@ sub new {
     bless($self, $class);
 
     # Connect to CPG service @ Corosync executive
-    $self->{_cpg_handle} = $self->_initialize;
+    my $cpgh = $self->{_cpg_handle} = $self->_initialize;
+    defined($cpgh) || $self->_cpgdie;
 
     $self;
 }
