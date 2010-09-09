@@ -79,7 +79,7 @@ BEGIN {
 	while (1) {
 		my $errkey = shift @errs;
 		my $errid = shift @errs;
-		last unless defined $errkey && $errid;
+		last unless defined $errkey && defined $errid;
 
 		$errmap{$errid} = $errkey;
 		push(@constants, $errkey);
