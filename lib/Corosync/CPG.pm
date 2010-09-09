@@ -340,13 +340,56 @@ don't want the trouble of overloading the class, you can do something like:
 
 =over
 
-=item C<_cb_deliver()>
+=item C<_cb_deliver($groupname, $nodeid, $pid, $msg)>
 
 This callback is executed when a new message arrives.
 
-=item C<_cb_confchg()>
+=over
+
+=item C<$groupname>
+
+The group this message came in from.
+
+=item C<$nodeid>
+
+The node id which transmitted the message.
+
+=item C<$pid>
+
+The process ID of the process that transmitted the message.
+
+=item C<$msg>
+
+The raw message we received.
+
+=back
+
+=item C<_cb_confchg($groupname, \@cur_members, \@left_members, \@join_members)>
 
 This callback is executed when the cluster group configuration changes.
+
+=over
+
+=item C<$groupname>
+
+The group experiencing a configuration change.
+
+=item C<\@cur_members>
+
+An array reference to the current membership set (including the described
+changes).
+
+=item C<\@left_members>
+
+An array reference to a list of members leaving. Contains an extra key
+C<reason> in the member hashes.
+
+=item C<\@join_members>
+
+An array reference to a list of members joining. Contains an extra key
+C<reason> in the member hashes.
+
+=back
 
 =back
 
@@ -442,10 +485,10 @@ Fetches the local node ID. If you need your own PID, ask Perl for C<$$>.
 
 Obtains the current flow control state.
 
-=head2 C<membership_get()>
+=head2 C<membership_get($groupname)>
 
-Returns the array of current cluster group members. See the C<_cb_confchg>
-callback for details on the format of the hashrefs populating the array.
+Returns an arrayref to the array of current cluster group members. Each
+element of the array is a hash with the C<nodeid> and C<pid> keys.
 
 =head2 C<set_cb_deliver($callback)>
 
