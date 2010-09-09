@@ -381,13 +381,6 @@ cpgc__membership_get(self, name)
         cpgc_setname(aTHX_ &group, name);
         handle = cpgc_gethandle(aTHX_ self);
         
-        /* get initial list size */
-        ret = cpg_membership_get(*handle, &group, 0, &member_list_size);
-	cpgc_seterr(self, ret);
-        if (ret != CPG_OK) {
-            XSRETURN_UNDEF;
-        }
-
         /* allocate a temporary buffer to get the addresses back */
         New(0, member_list, member_list_size, struct cpg_address);
         SAVEFREEPV(member_list);

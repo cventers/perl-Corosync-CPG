@@ -223,8 +223,13 @@ sub _cpgdie {
     die "CPG error: $err";
 }
 
+# Obtains the membership array for the current group state
 sub membership_get {
-	$_[0]->_membership_get(@_);
+	my $self = shift;
+
+	my $ret = $self->_membership_get(@_);
+	defined($ret) || $self->_cpgdie;
+	return $ret;
 }
 
 # Callback
