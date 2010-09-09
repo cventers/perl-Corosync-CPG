@@ -59,7 +59,7 @@ subtest 'capture join confchg' => sub {
 };
 
 # Verify cluster membership
-is_deeply($cpg_handle->membership_get, [
+is_deeply($cpg_handle->membership_get($CPG_TESTGRP), [
 	{ pid => $$, nodeid => $nodeid }
 ], "cluster membership is correct");
 
