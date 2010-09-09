@@ -149,6 +149,14 @@ sub join {
     $self->_join($name) || $self->_cpgdie;
 }
 
+# Leaves a cluster group
+sub leave {
+    my $self = shift;
+    my $name = shift;
+
+    $self->_leave($name) || $self->_cpgdie;
+}
+
 # Processes data, fires off callbacks
 sub dispatch {
     my $self = shift;
