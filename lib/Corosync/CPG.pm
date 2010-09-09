@@ -24,7 +24,8 @@ use constant CPG_FLOW_CONTROL_DISABLED	=> 0;
 use constant CPG_FLOW_CONTROL_ENABLED	=> 1;
 
 # Export constants
-my @constants = qw/
+my @constants;
+push(@constants, qw/
 	CS_DISPATCH_ONE
 	CS_DISPATCH_ALL
 	CS_DISPATCH_BLOCKING
@@ -36,7 +37,57 @@ my @constants = qw/
 
 	CPG_FLOW_CONTROL_DISABLED
 	CPG_FLOW_CONTROL_ENABLED
-/;
+/);
+
+# Export error constants, but remember their associations so we can
+# look up the right name to give with our error messages
+my %errmap;
+BEGIN {
+	my @errs = (
+		CS_OK => 1,
+		CS_ERR_LIBRARY => 2,
+		CS_ERR_VERSION => 3,
+		CS_ERR_INIT => 4,
+		CS_ERR_TIMEOUT => 5,
+		CS_ERR_TRY_AGAIN => 6,
+		CS_ERR_INVALID_PARAM => 7,
+		CS_ERR_NO_MEMORY => 8,
+		CS_ERR_BAD_HANDLE => 9,
+		CS_ERR_BUSY => 10,
+		CS_ERR_ACCESS => 11,
+		CS_ERR_NOT_EXIST => 12,
+		CS_ERR_NAME_TOO_LONG => 13,
+		CS_ERR_EXIST => 14,
+		CS_ERR_NO_SPACE => 15,
+		CS_ERR_INTERRUPT => 16,
+		CS_ERR_NAME_NOT_FOUND => 17,
+		CS_ERR_NO_RESOURCES => 18,
+		CS_ERR_NOT_SUPPORTED => 19,
+		CS_ERR_BAD_OPERATION => 20,
+		CS_ERR_FAILED_OPERATION => 21,
+		CS_ERR_MESSAGE_ERROR => 22,
+		CS_ERR_QUEUE_FULL => 23,
+		CS_ERR_QUEUE_NOT_AVAILABLE => 24,
+		CS_ERR_BAD_FLAGS => 25,
+		CS_ERR_TOO_BIG => 26,
+		CS_ERR_NO_SECTIONS => 27,
+		CS_ERR_CONTEXT_NOT_FOUND => 28,
+		CS_ERR_TOO_MANY_GROUPS => 30,
+		CS_ERR_SECURITY => 100,
+	);
+
+	while (1) {
+		my $errkey = shift @errs;
+		my $errid = shift @errs;
+		last unless defined $errkey && $errid;
+
+		$errmap{$errid} = $errkey;
+		push(@constants, $errkey);
+
+		no strict 'refs';
+		*{"$errkey"} = sub { $errid };
+	}
+}
 
 our @ISA = qw/Exporter DynaLoader/;
 our @EXPORT = qw//;
@@ -149,7 +200,18 @@ sub flow_control_state_get {
 # Throws an exception with Corosync error code
 sub _cpgdie {
     my $self = shift;
-    my $err = $self->{_cs_error} || 'UNKNOWN';
+    my $err = $self->{_cs_error};
+
+	if (defined($err)) {
+		my $str = $errmap{$err};
+		if (defined($str)) {
+			$err = "$str ($err)";
+		}
+	}
+	else {
+		$err = 'UNKNOWN';
+	}
+
     die "CPG error: $err";
 }
 
