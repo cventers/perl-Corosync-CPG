@@ -13,7 +13,7 @@ Requires:       perl
 
 %description
 This library provides Perl bindings to Corosync from libcpg, so that Perl programs can
-access extended virtual synchrony.
+access virtual synchrony.
 
 %prep
 %setup -q -n perl-Corosync-CPG-%{version}
@@ -40,6 +40,9 @@ rm -rf %{buildroot}
 rm -rf %{buildroot}
 
 %changelog
+* Fri Sep 18 2010 Chase Venters <chase.venters@gmail.com> 0.0.1-2
+- Correct description... evs is a separate service :p
+
 * Tue Jun 08 2010 Chase Venters <chase.venters@gmail.com> 0.0.1-1
 - Initial specfile
 
