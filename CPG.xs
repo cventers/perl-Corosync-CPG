@@ -202,9 +202,9 @@ cpgc_confchg (cpg_handle_t handle,
     /* add arguments */
     XPUSHs(sv_2mortal(newRV((SV*)self)));
     XPUSHs(sv_2mortal((SV*)newSVpv(group_name->value, group_name->length)));
-    XPUSHs(sv_2mortal(newRV((SV*)mlav)));
-    XPUSHs(sv_2mortal(newRV((SV*)llav)));
-    XPUSHs(sv_2mortal(newRV((SV*)jlav)));
+    XPUSHs(sv_2mortal(newRV_noinc((SV*)mlav)));
+    XPUSHs(sv_2mortal(newRV_noinc((SV*)llav)));
+    XPUSHs(sv_2mortal(newRV_noinc((SV*)jlav)));
 
     /* done building stack */
     PUTBACK;
