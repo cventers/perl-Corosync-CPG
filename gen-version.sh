@@ -3,7 +3,7 @@
 # Load the stored version information if we have it
 if test -f stored-version.sh
 then
-	. stored-version.sh
+	. ./stored-version.sh
 fi
 
 # Obtain GIT commit ID
